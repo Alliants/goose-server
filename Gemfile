@@ -13,6 +13,9 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 
 gem 'puma'
+gem 'grape'
+gem 'hashie-forbidden_attributes' # We will be using Grape's own validations
+gem 'octokit'
 
 group :development, :test do
   gem 'byebug'
