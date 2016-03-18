@@ -11,5 +11,17 @@ module Maverick
         PullRequest.where(status: :open)
       end
     end
+
+    namespace :developer do
+      resources :profile do
+        desc 'Returns a developers github profile'
+        params do
+          requires :username, type: String, desc: 'Profile username'
+        end
+        get :github do
+          DeveloperProfile.new(source: "github", username: params[:username]).information
+        end
+      end
+    end
   end
 end
