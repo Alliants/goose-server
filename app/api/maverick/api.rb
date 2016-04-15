@@ -11,5 +11,12 @@ module Maverick
         PullRequest.where(status: :open)
       end
     end
+
+    resources :repositories do
+      desc 'List of all the organization repositories'
+      get do
+        Repository.all
+      end
+    end
   end
 end

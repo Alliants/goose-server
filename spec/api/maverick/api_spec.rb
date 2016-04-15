@@ -17,4 +17,21 @@ describe Maverick::API do
       end
     end
   end
+
+  describe "resource repositories" do
+    describe "index" do
+      it "returns a list of all the organization repositories" do
+        allow(Repository).to receive(:all).and_return([
+          Repository.new(name: "some/test")
+        ])
+
+        get "/api/repositories"
+
+        parsed_body = JSON.parse(response.body)
+        expected_response = [{"name" => "some/test"}]
+
+        expect(parsed_body).to eq(expected_response)
+      end
+    end
+  end
 end

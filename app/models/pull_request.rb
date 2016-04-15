@@ -11,7 +11,9 @@ class PullRequest
   end
 
   def self.where(status:)
-    GithubPullRequest.fetch(repository: "Alliants/fs-residential", status: status)
+    Repository.all.map do |repository|
+      GithubPullRequest.fetch(repository: repository.name, status: status)
+    end.flatten
   end
 
   def ==(other_pr)
