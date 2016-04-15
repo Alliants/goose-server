@@ -11,10 +11,6 @@ class GithubPullRequest
   end
 
   def self.fetch(repository: , status:)
-    Octokit.configure do |config|
-      config.access_token = ENV["GITHUB_ACCESS_TOKEN"]
-    end
-
     Octokit.pull_requests(repository, state: status.to_s).map do |pull_request|
       new(title: pull_request.title,
           link:  pull_request._links.html.href,
