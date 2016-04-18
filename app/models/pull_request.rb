@@ -10,8 +10,8 @@ class PullRequest
     @created_at = args.fetch(:created_at)
   end
 
-  def self.where(status:)
-    Repository.all.map do |repository|
+  def self.where(status:, repositories:)
+    repositories.map do |repository|
       GithubPullRequest.fetch(repository: repository.name, status: status)
     end.flatten
   end

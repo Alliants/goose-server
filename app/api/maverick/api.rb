@@ -8,7 +8,7 @@ module Maverick
     resources :pull_requests do
       desc 'List of all the open pull requests'
       get do
-        PullRequest.where(status: :open)
+        PullRequest.where(status: :open, repositories: Repository.all)
       end
     end
 

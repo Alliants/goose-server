@@ -4,11 +4,22 @@ describe Maverick::API do
   describe "resource pull_requests" do
     describe "index" do
       it "returns a list of all the open pull requests in the org" do
-        pull_request = PullRequest.new(link: "http://example.com", created_at: Time.now)
+        creation_time = DateTime.parse("1985/08/06 11:00:00")
+        pull_request = PullRequest.new(link: "http://example.com", created_at: creation_time)
+        repositories = [Repository.new(name: "some/repository")]
 
-        allow(PullRequest).to receive(:where).with(status: :open).
+        expect(Repository).to receive(:all).and_return(repositories)
+        expect(PullRequest).to receive(:where).with(status: :open, repositories: repositories).
           and_return([pull_request])
-        expected_response = JSON.parse([pull_request].to_json)
+
+        expected_response = [{
+          "link"=>"http://example.com",
+          "title"=>"",
+          "org"=>"",
+          "repo"=>"",
+          "owner"=>"",
+          "created_at"=>"1985-08-06T11:00:00.000+00:00"
+        }]
 
         get "/api/pull_requests"
         parsed_body = JSON.parse(response.body)
