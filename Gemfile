@@ -18,6 +18,7 @@ gem 'hashie-forbidden_attributes' # We will be using Grape's own validations
 gem 'octokit'
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'byebug'
 end
 

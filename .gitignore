@@ -12,3 +12,6 @@
 /log/*
 !/log/.keep
 /tmp
+
+# Local Environment variables for development
+.env
