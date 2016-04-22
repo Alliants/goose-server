@@ -1,5 +1,6 @@
 class GithubPullRequest
-  attr_reader :link, :title, :org, :repo, :created_at, :owner
+  attr_reader :link, :title, :org, :repo, :created_at,
+              :owner, :number_of_comments
 
   def initialize(args)
     @link = args.fetch(:link)
@@ -8,6 +9,7 @@ class GithubPullRequest
     @repo = args.fetch(:repo, '')
     @owner = args.fetch(:owner, '')
     @created_at = args.fetch(:created_at)
+    @number_of_comments = args.fetch(:number_of_comments)
   end
 
   def self.fetch(repository: , status:)
@@ -17,7 +19,8 @@ class GithubPullRequest
           repo: repository,
           org: repository.split('/').first,
           owner: pull_request.user.login,
-          created_at: pull_request.created_at)
+          created_at: pull_request.created_at,
+          number_of_comments: pull_request.rels[:review_comments].get.data.count) #this will make another request to the github API
     end
   end
 

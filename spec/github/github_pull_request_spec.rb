@@ -11,7 +11,8 @@ describe GithubPullRequest do
                         org: "Alliants",
                         repo: "Project Maverick",
                         created_at: some_date,
-                        owner: "some_owner")
+                        owner: "some_owner",
+                        number_of_comments: 1 )
       ]
       github_reponse = [
         OpenStruct.new(title: "Example",

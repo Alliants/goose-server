@@ -5,7 +5,7 @@ describe Maverick::API do
     describe "index" do
       it "returns a list of all the open pull requests in the org" do
         creation_time = DateTime.parse("1985/08/06 11:00:00")
-        pull_request = PullRequest.new(link: "http://example.com", created_at: creation_time)
+        pull_request = PullRequest.new(link: "http://example.com", created_at: creation_time, number_of_comments: 5)
         repositories = [Repository.new(name: "some/repository")]
 
         expect(Repository).to receive(:all).and_return(repositories)
@@ -18,7 +18,8 @@ describe Maverick::API do
           "org"=>"",
           "repo"=>"",
           "owner"=>"",
-          "created_at"=>"1985-08-06T11:00:00.000+00:00"
+          "created_at"=>"1985-08-06T11:00:00.000+00:00",
+          "number_of_comments" => 5
         }]
 
         get "/api/pull_requests"
