@@ -17,6 +17,7 @@ gem 'grape'
 gem 'hashie-forbidden_attributes' # We will be using Grape's own validations
 gem 'octokit'
 gem 'faraday-http-cache' # only used for Octokit caching
+gem 'rack-cors', '~> 0.4.0'
 
 group :deployment do
   gem 'mina'
@@ -33,4 +34,3 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'rspec-rails', '~> 3.0'
 end
-
