@@ -18,6 +18,12 @@ gem 'hashie-forbidden_attributes' # We will be using Grape's own validations
 gem 'octokit'
 gem 'faraday-http-cache' # only used for Octokit caching
 
+group :deployment do
+  gem 'mina'
+  gem 'mina-puma'
+  gem 'dotenv'
+end
+
 group :development, :test do
   gem 'dotenv-rails'
   gem 'byebug'
