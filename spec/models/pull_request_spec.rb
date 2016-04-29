@@ -18,7 +18,7 @@ describe PullRequest do
       allow(GithubPullRequest).to receive(:fetch).
         with(repository: "some/repository", status: :open).
         and_return([
-          GithubPullRequest.new(link: "http://example.com", created_at: Time.now)
+          GithubPullRequest.new(link: "http://example.com", created_at: Time.now, number_of_comments: 5)
       ])
 
       expect(described_class.where(status: :open, repositories: available_repositories)).to eq(expected_collection)

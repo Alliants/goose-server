@@ -27,4 +27,12 @@ class GithubPullRequest
   def ==(other_pr)
     self.link == other_pr.link
   end
+
+  def to_h
+    self.instance_variables.inject({}) do |acc,attribute|
+      clean_attribute_name = attribute.to_s.gsub(/@/, '').to_sym
+      acc[clean_attribute_name] = self.instance_variable_get(attribute)
+      acc
+    end
+  end
 end

@@ -8,12 +8,17 @@ class PullRequest
     @repo = args.fetch(:repo, '')
     @owner = args.fetch(:owner, '')
     @created_at = args.fetch(:created_at)
+    @number_of_comments = args.fetch(:number_of_comments)
   end
 
   def self.where(status:, repositories:)
     repositories.map do |repository|
       GithubPullRequest.fetch(repository: repository.name, status: status)
-    end.flatten
+    end.flatten.map { |github_pull_request| to_pull_request(github_pull_request) }
+  end
+
+  def self.to_pull_request(data)
+    new(data.to_h)
   end
 
   def ==(other_pr)
