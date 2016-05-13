@@ -15,6 +15,6 @@ class GithubRepository
   end
 
   def ==(other)
-    self.full_name == other.full_name
+    full_name == other.full_name
   end
 end

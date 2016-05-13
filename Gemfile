@@ -27,8 +27,9 @@ group :deployment do
 end
 
 group :development, :test do
-  gem 'dotenv-rails'
   gem 'byebug'
+  gem 'dotenv-rails'
+  gem "rubocop", require: false
 end
 
 group :development do

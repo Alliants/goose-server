@@ -4,35 +4,42 @@ class GithubPullRequest
 
   def initialize(args)
     @link = args.fetch(:link)
-    @title = args.fetch(:title, '')
-    @org = args.fetch(:org, '')
-    @repo = args.fetch(:repo, '')
-    @owner = args.fetch(:owner, '')
+    @title = args.fetch(:title, "")
+    @org = args.fetch(:org, "")
+    @repo = args.fetch(:repo, "")
+    @owner = args.fetch(:owner, "")
     @created_at = args.fetch(:created_at)
     @number_of_comments = args.fetch(:number_of_comments)
   end
 
-  def self.fetch(repository: , status:)
+  def self.fetch(repository:, status:)
     Octokit.pull_requests(repository, state: status.to_s).map do |pull_request|
       new(title: pull_request.title,
           link:  pull_request._links.html.href,
           repo: repository,
-          org: repository.split('/').first,
+          org: repository.split("/").first,
           owner: pull_request.user.login,
           created_at: pull_request.created_at,
-          number_of_comments: pull_request.rels[:review_comments].get.data.count) #this will make another request to the github API
+          number_of_comments: number_of_comments(pull_request))
     end
   end
 
-  def ==(other_pr)
-    self.link == other_pr.link
+  def ==(other)
+    link == other.link
   end
 
   def to_h
-    self.instance_variables.inject({}) do |acc,attribute|
-      clean_attribute_name = attribute.to_s.gsub(/@/, '').to_sym
-      acc[clean_attribute_name] = self.instance_variable_get(attribute)
-      acc
+    instance_variables.each_with_object({}) do |attribute, hash|
+      clean_attribute_name       = attribute.to_s.gsub(/@/, "").to_sym
+      hash[clean_attribute_name] = instance_variable_get(attribute)
     end
+  end
+
+  def self.number_of_comments(pull_request)
+    # This will make another request to the github API
+    pull_request.rels[:review_comments]
+      .get
+      .data
+      .count
   end
 end

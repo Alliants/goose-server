@@ -1,7 +1,7 @@
 class Repository
   attr_reader :name
 
-  def initialize(name: )
+  def initialize(name:)
     @name = name
   end
 
@@ -11,17 +11,17 @@ class Repository
 
   def self.all(cache: true)
     storage_objects = if cache
-      self.storage.all
-    else
-      GithubRepository.all.map do |repo|
-        self.storage.create(name: repo.full_name)
-      end
+                        storage.all
+                      else
+                        GithubRepository.all.map do |repo|
+                          storage.create(name: repo.full_name)
+                        end
     end
 
-    storage_objects.map { |stored_repo| self.new(name: stored_repo.name) }
+    storage_objects.map { |stored_repo| new(name: stored_repo.name) }
   end
 
   def ==(other)
-    self.name == other.name
+    name == other.name
   end
 end
