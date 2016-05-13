@@ -13,6 +13,7 @@ test:
 
 production:
   <<: *default
-  database: project_maverick_production
-  username: project_maverick
-  password: <%= ENV['PROJECT_MAVERICK_DATABASE_PASSWORD'] %>
+  database: <%= ENV['GOOSE_SERVER_DATABASE_NAME'] %>
+  host: <%= ENV['GOOSE_SERVER_DATABASE_HOST'] %>
+  username: <%= ENV['GOOSE_SERVER_DATABASE_USERNAME'] %>
+  password: <%= ENV['GOOSE_SERVER_DATABASE_PASSWORD'] %>

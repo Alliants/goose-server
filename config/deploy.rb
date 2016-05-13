@@ -36,6 +36,7 @@ task :environment do
   # Be sure to commit your .ruby-version or .rbenv-version to your repository.
   invoke :'rbenv:load'
   queue! %[source /home/ubuntu/.github_secret]
+  queue! %[source /home/ubuntu/.database_secret]
   queue! %[source /home/ubuntu/.secret]
 end
 
@@ -81,7 +82,7 @@ task :deploy => :environment do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
-    # invoke :'rails:db_migrate'
+    invoke :'rails:db_migrate'
     # invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 

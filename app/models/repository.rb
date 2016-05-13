@@ -5,10 +5,20 @@ class Repository
     @name = name
   end
 
-  def self.all
-    GithubRepository.all.map do |repo|
-      new(name: repo.full_name)
+  def self.storage
+    RepositoryStorage
+  end
+
+  def self.all(cache: true)
+    storage_objects = if cache
+      self.storage.all
+    else
+      GithubRepository.all.map do |repo|
+        self.storage.create(name: repo.full_name)
+      end
     end
+
+    storage_objects.map { |stored_repo| self.new(name: stored_repo.name) }
   end
 
   def ==(other)

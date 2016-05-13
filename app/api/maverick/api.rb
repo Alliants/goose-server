@@ -4,7 +4,6 @@ module Maverick
     format :json
     prefix :api
 
-
     resources :"pull-requests" do
       desc 'List of all the open pull requests'
       get do
