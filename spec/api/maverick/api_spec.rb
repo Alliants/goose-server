@@ -22,7 +22,7 @@ describe Maverick::API do
           "number_of_comments" => 5
         }]
 
-        get "/api/pull_requests"
+        get "/api/pull-requests"
         parsed_body = JSON.parse(response.body)
 
         expect(parsed_body).to eq(expected_response)
