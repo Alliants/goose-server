@@ -10,13 +10,7 @@ class Repository
   end
 
   def self.all(cache: true)
-    storage_objects = if cache
-                        storage.all
-                      else
-                        GithubRepository.all.map do |repo|
-                          storage.create(name: repo.full_name)
-                        end
-    end
+    storage_objects = cache ? cached_storage : new_storage
 
     storage_objects.map { |stored_repo| new(name: stored_repo.name) }
   end
@@ -24,4 +18,16 @@ class Repository
   def ==(other)
     name == other.name
   end
+
+  def self.cached_storage
+    storage.all
+  end
+  private_class_method :cached_storage
+
+  def self.new_storage
+    GithubRepository.all.map do |repo|
+      storage.create(name: repo.full_name)
+    end
+  end
+  private_class_method :new_storage
 end

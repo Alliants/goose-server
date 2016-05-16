@@ -30,6 +30,7 @@ group :development, :test do
   gem 'byebug'
   gem 'dotenv-rails'
   gem "rubocop", require: false
+  gem "pry"
 end
 
 group :development do

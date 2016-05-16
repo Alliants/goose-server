@@ -16,25 +16,35 @@ class PullRequest
   end
 
   def self.where(status:, repositories:, cache: true)
-    storage_objects = if cache
-                        repository_names = repositories.map(&:name)
-                        storage.where(repo: repository_names)
-                      else
-                        repositories.map do |repository|
-                          GithubPullRequest.fetch(repository: repository.name, status: status)
-                        end.
-                        flatten.
-                        map { |github_pr| storage.create(github_pr.to_h) }
-    end
+    storage_objects = cache ? cached_storage(repositories) : new_storage(repositories, status)
 
-    storage_objects.map { |stored_pr| to_pull_request(stored_pr) }
-  end
-
-  def self.to_pull_request(data)
-    new(data.to_h)
+    storage_objects.map(&to_new_pull_request)
   end
 
   def ==(other)
     link == other.link
+  end
+
+  def self.new_storage(repositories, status)
+    fetch_repositories(repositories, status).flatten.map(&to_stored_pull_request)
+  end
+
+  def self.cached_storage(repositories)
+    repository_names = repositories.map(&:name)
+    storage.where(repo: repository_names)
+  end
+
+  def self.fetch_repositories(repositories, status)
+    repositories.map do |repository|
+      GithubPullRequest.fetch(repository: repository.name, status: status)
+    end
+  end
+
+  def self.to_new_pull_request
+    ->(pr) { new(pr.to_h) }
+  end
+
+  def self.to_stored_pull_request
+    ->(pr) { storage.create(pr.to_h) }
   end
 end
