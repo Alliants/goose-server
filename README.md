@@ -24,6 +24,6 @@ Copy the `.env.example` to `.env` and supply the appropriate ENV variables
 
 visit
 
-[http://localhost:3000/api/pull_requests](http://localhost:3000/api/pull_requests)
+[http://localhost:3000/api/pull-requests](http://localhost:3000/api/pull-requests)
 
 
