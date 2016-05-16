@@ -26,16 +26,18 @@ class PullRequest
   end
 
   def self.new_storage(repositories, status)
-    fetch_repositories(repositories, status).flatten.map(&to_stored_pull_request)
+    fetch_repositories(repositories, status).map(&to_stored_pull_request)
   end
+  private_class_method :new_storage
 
   def self.cached_storage(repositories)
     repository_names = repositories.map(&:name)
     storage.where(repo: repository_names)
   end
+  private_class_method :cached_storage
 
   def self.fetch_repositories(repositories, status)
-    repositories.map do |repository|
+    repositories.flat_map do |repository|
       GithubPullRequest.fetch(repository: repository.name, status: status)
     end
   end
