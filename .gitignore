@@ -15,3 +15,6 @@
 
 # Local Environment variables for development
 .env
+
+# Ignore code coverage
+/coverage

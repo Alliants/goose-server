@@ -29,4 +29,6 @@ visit
 ## To begin
 Seed the data with a live call. Open a `rails console` and run:
 
-  PullRequest.where(status: :open, repositories: Repository.all(cache: false), cache: false)
+    require "refresh_data"
+    dr = DataRefresher.new(Repository.all(cache: false))
+    dr.refresh_all!

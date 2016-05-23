@@ -17,12 +17,10 @@ describe Maverick::API do
       }]
     end
 
-    before do
-      pull_request
-    end
-
     describe "#index" do
       it "returns a list of all the open pull requests in the org" do
+        pull_request
+
         get "/api/pull-requests"
 
         parsed_body = JSON.parse(response.body)

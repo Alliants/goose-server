@@ -12,6 +12,12 @@ class GithubPullRequest
     @number_of_comments = args.fetch(:number_of_comments)
   end
 
+  def self.fetch_all(repositories, status)
+    repositories.flat_map do |repository|
+      fetch(repository: repository.name, status: status)
+    end
+  end
+
   def self.fetch(repository:, status:)
     Octokit.pull_requests(repository, state: status.to_s).map do |pull_request|
       new(title: pull_request.title,

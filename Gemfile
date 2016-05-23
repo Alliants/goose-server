@@ -30,9 +30,10 @@ group :development, :test do
   gem "byebug"
   gem "dotenv-rails"
   gem "factory_girl_rails"
+  gem "pry"
   gem "rspec-rails", "~> 3.4"
   gem "rubocop", require: false
-  gem "pry"
+  gem "simplecov", require: false
 end
 
 group :development do
