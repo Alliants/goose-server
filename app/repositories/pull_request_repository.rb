@@ -11,6 +11,10 @@ class PullRequestRepository
     parse(store.all)
   end
 
+  def count
+    store.all.count
+  end
+
   def store_each(github_request)
     github_request.each do |req|
       store.create(req.to_h)

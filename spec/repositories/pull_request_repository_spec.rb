@@ -19,4 +19,10 @@ describe PullRequestRepository do
       expect { subject.store_each(source_data) }.to change { PullRequestStorage.count }.by 1
     end
   end
+
+  describe "#count" do
+    it "stores a github pull request" do
+      expect(subject.count).to be 1
+    end
+  end
 end

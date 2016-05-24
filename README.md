@@ -27,8 +27,5 @@ visit
 [http://localhost:3000/api/pull-requests](http://localhost:3000/api/pull-requests)
 
 ## To begin
-Seed the data with a live call. Open a `rails console` and run:
 
-    require "refresh_data"
-    dr = DataRefresher.new(Repository.all(cache: false))
-    dr.refresh_all!
+Seed the data with a live call `bundle exec rake db:seed`

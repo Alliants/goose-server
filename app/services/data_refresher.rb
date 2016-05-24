@@ -9,7 +9,7 @@ class DataRefresher
 
   attr_reader :source, :target
 
-  def initialize(repositories = Repository.all)
+  def initialize(repositories: Repository.all)
     @source = GithubPullRequest
     @target = PullRequestRepository.new
     @repositories = repositories
