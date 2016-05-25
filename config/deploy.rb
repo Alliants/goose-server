@@ -16,7 +16,7 @@ set :domain, ENV['SERVER_HOST']
 set :deploy_to, '/var/www/goose-server'
 set :user, 'ubuntu'
 set :repository, 'git@github.com:Alliants/goose-server.git'
-set :branch, 'master'
+set :branch, 'add-webhooks-for-repositories'
 set :term_mode, nil
 set :forward_agent, true
 

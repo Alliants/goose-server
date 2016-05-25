@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160513190531) do
+ActiveRecord::Schema.define(version: 20160527155830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20160513190531) do
     t.string   "owner"
     t.datetime "created_at"
     t.integer  "number_of_comments"
+    t.integer  "original_id"
   end
 
   create_table "repository_storages", force: :cascade do |t|
