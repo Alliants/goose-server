@@ -46,4 +46,18 @@ describe Maverick::API do
       end
     end
   end
+
+  describe "Github Webhook updates" do
+    describe "post" do
+      it "recieves an update from github" do
+        event_information = {
+          foo: "bar"
+        }
+
+        expect(Github::Webhook).to receive(:call).with(event_information.as_json)
+
+        post "/api/github-webhook", event_information
+      end
+    end
+  end
 end
