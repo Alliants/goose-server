@@ -23,6 +23,9 @@ module ProjectMaverick
     config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
     config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
 
+    # Add the lib folders
+    config.autoload_paths << "#{config.root}/lib/github"
+
     # Add the github directory
     config.paths.add File.join('app', 'github'), glob: File.join('**', '*.rb')
     config.autoload_paths += Dir[Rails.root.join('app', 'github', '*')]

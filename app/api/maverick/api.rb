@@ -19,5 +19,11 @@ module Maverick
         Repository.all
       end
     end
+
+    desc "Updates coming from github webhooks"
+    post :"github-webhook" do
+      Rails.logger.info params.to_yaml
+      Github::Webhook.call(params.to_h)
+    end
   end
 end
