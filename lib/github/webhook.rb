@@ -10,13 +10,14 @@ module Github
           owner: payload[:pull_request][:user][:login],
           created_at: payload[:pull_request][:created_at],
           original_id: payload[:pull_request][:id],
-          number_of_comments: payload[:pull_request][:review_comments])
+          number_of_comments: payload[:pull_request][:review_comments]
+        )
       end
     end
 
     TYPE_MAP = {
-      'pull_request' => PullRequestHandler
-    }
+      "pull_request" => PullRequestHandler
+    }.freeze
 
     def self.call(payload:, type:)
       handler = TYPE_MAP.fetch(type)

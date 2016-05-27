@@ -54,9 +54,10 @@ describe Maverick::API do
           foo: "bar"
         }
 
-        expect(Github::Webhook).to receive(:call).with(payload: event_information.as_json, type: "pull_request")
+        expect(Github::Webhook).to receive(:call)
+          .with(payload: event_information.as_json, type: "pull_request")
 
-        post "/api/github-webhook", event_information, 'X-Github-Event' => 'pull_request'
+        post "/api/github-webhook", event_information, "X-Github-Event" => "pull_request"
       end
     end
   end
