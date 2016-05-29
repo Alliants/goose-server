@@ -3,7 +3,7 @@ require "rails_helper"
 describe Github::Webhook do
   describe "when payload is a pull request" do
     describe "and the action is open" do
-      it "creates a new pull request" do
+      it "is handled by pull request handler" do
         github_pr_data = {
           action: "opened",
           pull_request: {
@@ -26,12 +26,12 @@ describe Github::Webhook do
           }
         }
 
-        expect do
-          described_class.call(payload: github_pr_data, type: "pull_request")
-        end.to change { PullRequestRepository.new.count }.by(1)
+        allow(Github::Webhook::PullRequestHandler).to receive(:new)
+          .with(github_pr_data).and_return(double("instance", save: true))
 
-        stored_pull_request = PullRequestStorage.find_by(original_id: 12_345)
-        expect(stored_pull_request.number_of_comments).to eq(0)
+        described_class.call(payload: github_pr_data, type: "pull_request")
+
+        expect(Github::Webhook::PullRequestHandler).to have_received(:new).with(github_pr_data)
       end
     end
   end

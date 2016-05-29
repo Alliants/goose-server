@@ -37,17 +37,19 @@ module Github
         payload[:pull_request][:review_comments]
       end
 
+      def action
+        payload[:action]
+      end
+
       def save
-        PullRequestStorage.create(
-          link: link,
-          title: title,
-          org: organization,
-          repo: repository,
-          owner: owner,
-          created_at: created_at,
-          original_id: original_id,
-          number_of_comments: number_of_comments
-        )
+        if action == "opened"
+          PullRequestStorage.create(link: link, title: title, org: organization,
+                                    repo: repository,
+                                    owner: owner,
+                                    created_at: created_at,
+                                    original_id: original_id,
+                                    number_of_comments: number_of_comments)
+        end
       end
 
       private
