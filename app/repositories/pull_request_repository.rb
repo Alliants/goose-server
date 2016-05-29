@@ -8,7 +8,7 @@ class PullRequestRepository
   end
 
   def find_open
-    parse(store.all)
+    parse_many(store.all)
   end
 
   def count
@@ -17,6 +17,15 @@ class PullRequestRepository
 
   def delete(original_id:)
     store.find_by!(original_id: original_id).delete
+  end
+
+  def find_pull_request(original_id:)
+    parse_one(store.find_by(original_id: original_id))
+  end
+
+  def persist(pull_request)
+    instance = store.find_by(original_id: pull_request.original_id)
+    instance.update(pull_request.to_h)
   end
 
   def store_each(github_request)
@@ -29,7 +38,11 @@ class PullRequestRepository
 
   private
 
-  def parse(store_response)
-    store_response.map { |pr| PullRequest.new(pr.to_h) }
+  def parse_many(store_response)
+    store_response.map { |pr| parse_one(pr) }
+  end
+
+  def parse_one(store_response_object)
+    PullRequest.new(store_response_object.to_h)
   end
 end

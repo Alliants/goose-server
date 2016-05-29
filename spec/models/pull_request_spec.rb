@@ -4,6 +4,7 @@ describe PullRequest do
   let(:old_request) do
     PullRequest.new(
       link: "identical",
+      original_id: 1,
       created_at: Time.zone.now,
       number_of_comments: 0
     )
@@ -12,6 +13,7 @@ describe PullRequest do
   let(:new_request) do
     PullRequest.new(
       link: "identical",
+      original_id: 1,
       created_at: Time.zone.now,
       number_of_comments: 100
     )
@@ -20,6 +22,7 @@ describe PullRequest do
   let(:different_request) do
     PullRequest.new(
       link: "different",
+      original_id: 2,
       created_at: Time.zone.now,
       number_of_comments: 100
     )

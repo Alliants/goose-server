@@ -6,6 +6,7 @@ FactoryGirl.define do
     repo  "some/repository"
     owner "some_owner"
     number_of_comments 5
+    original_id 12_345
     created_at Time.zone.now
   end
 end
