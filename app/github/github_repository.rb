@@ -6,12 +6,16 @@ class GithubRepository
   end
 
   def self.all
-    # TODO: Right now the limit of 100 per page allow us to retrieve all the
-    # repositories we have. I think a more elegant way embracing pagination
-    # needs to be implemented.
-    Octokit.organization_repositories("Alliants", per_page: 100).map do |repo|
+    # Given we expect this collection to be relatively small, and also since the
+    # docs suggest this mechanism in this situations, we will be using
+    # auto_paginate in this case.
+    Octokit.auto_paginate = true
+    results = Octokit.organization_repositories("Alliants").map do |repo|
       new(full_name: repo.full_name)
     end
+    Octokit.auto_paginate = false
+
+    results
   end
 
   def ==(other)
