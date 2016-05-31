@@ -15,13 +15,17 @@ class PullRequestRepository
     store.all.count
   end
 
+  def delete(original_id:)
+    store.find_by!(original_id: original_id).delete
+  end
+
   def store_each(github_request)
     github_request.each do |req|
       store.create(req.to_h)
     end
   end
 
-  delegate :destroy_all, to: :store
+  delegate :destroy_all, :create, to: :store
 
   private
 

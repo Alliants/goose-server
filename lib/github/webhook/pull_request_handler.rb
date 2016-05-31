@@ -1,6 +1,36 @@
 module Github
   class Webhook
     class PullRequestHandler
+      class OpenAction
+        def self.execute(handler)
+          PullRequestRepository.new.create(link: handler.link,
+                                           title: handler.title,
+                                           org: handler.organization,
+                                           repo: handler.repository,
+                                           owner: handler.owner,
+                                           created_at: handler.created_at,
+                                           original_id: handler.original_id,
+                                           number_of_comments: handler.number_of_comments)
+        end
+      end
+
+      class CloseAction
+        def self.execute(handler)
+          PullRequestRepository.new.delete(original_id: handler.original_id)
+        end
+      end
+
+      class NonExistingAction
+        def self.execute(_handler)
+          # do nothing
+        end
+      end
+
+      TRANSITION_MAP = {
+        "opened" => OpenAction,
+        "closed" => CloseAction
+      }.freeze
+
       def initialize(payload)
         @payload = payload.symbolize_keys
       end
@@ -42,14 +72,7 @@ module Github
       end
 
       def save
-        if action == "opened"
-          PullRequestStorage.create(link: link, title: title, org: organization,
-                                    repo: repository,
-                                    owner: owner,
-                                    created_at: created_at,
-                                    original_id: original_id,
-                                    number_of_comments: number_of_comments)
-        end
+        TRANSITION_MAP.fetch(action, NonExistingAction).execute(self)
       end
 
       private
