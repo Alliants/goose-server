@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160527155830) do
+ActiveRecord::Schema.define(version: 20160531211453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,9 @@ ActiveRecord::Schema.define(version: 20160527155830) do
     t.integer  "number_of_comments"
     t.integer  "original_id"
   end
+
+  add_index "pull_request_storages", ["link"], name: "index_pull_request_storages_on_link", unique: true, using: :btree
+  add_index "pull_request_storages", ["original_id"], name: "index_pull_request_storages_on_original_id", unique: true, using: :btree
 
   create_table "repository_storages", force: :cascade do |t|
     t.string "name"
