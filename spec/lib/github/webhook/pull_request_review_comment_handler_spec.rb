@@ -22,8 +22,8 @@ describe Github::Webhook::PullRequestReviewCommentHandler do
   end
 
   context "other comment events" do
-    it "ignores all other" do
-      %w(edited deleted).each do |action|
+    %w(edited deleted).each do |action|
+      it "ignores action #{action}" do
         pull_request = PullRequestStorage.create(original_id: 12_345, number_of_comments: 0)
         github_pr_data = {
           action: action,

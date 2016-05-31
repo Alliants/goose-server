@@ -32,7 +32,7 @@ module Github
       }.freeze
 
       def initialize(payload)
-        @payload = payload.symbolize_keys
+        @payload = payload
       end
 
       def link
