@@ -2,7 +2,7 @@ module Github
   class Webhook
     class PullRequestHandler
       def initialize(payload)
-        @payload = payload
+        @payload = payload.symbolize_keys
       end
 
       def link

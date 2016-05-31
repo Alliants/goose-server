@@ -22,7 +22,6 @@ module Maverick
 
     desc "Updates coming from github webhooks"
     post :"github-webhook" do
-      Rails.logger.info params.to_yaml
       Github::Webhook.call(payload: params.to_h, type: headers["X-Github-Event"])
     end
   end
