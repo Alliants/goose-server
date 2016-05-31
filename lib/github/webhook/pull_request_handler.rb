@@ -6,7 +6,7 @@ module Github
       end
 
       def link
-        payload[:pull_request][:html_link]
+        payload.[:pull_request][:html_url]
       end
 
       def title
