@@ -8,6 +8,7 @@ describe Maverick::API do
     let(:expected_response) do
       [{
         "link" => "http://example.com",
+        "original_id" => 12_345,
         "title" => "Example",
         "org" => "Alliants",
         "repo" => "some/repository",

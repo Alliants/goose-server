@@ -1,9 +1,10 @@
 class GithubPullRequest
   attr_reader :link, :title, :org, :repo, :created_at,
-              :owner, :number_of_comments
+              :owner, :number_of_comments, :original_id
 
   def initialize(args)
     @link = args.fetch(:link)
+    @original_id = args.fetch(:original_id)
     @title = args.fetch(:title, "")
     @org = args.fetch(:org, "")
     @repo = args.fetch(:repo, "")
@@ -21,6 +22,7 @@ class GithubPullRequest
   def self.fetch(repository:, status:)
     Octokit.pull_requests(repository, state: status.to_s).map do |pull_request|
       new(title: pull_request.title,
+          original_id: pull_request.id,
           link:  pull_request._links.html.href,
           repo: repository,
           org: repository.split("/").first,

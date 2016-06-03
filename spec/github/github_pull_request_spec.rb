@@ -11,6 +11,7 @@ describe GithubPullRequest do
       allow(octokit_rels).to receive_message_chain(:[], :get, :data, :count).and_return(1)
       expected_collection = [
         GithubPullRequest.new(link: github_href,
+                              original_id: 12_345,
                               title: "Example",
                               org: "Alliants",
                               repo: "Project Maverick",
@@ -21,6 +22,7 @@ describe GithubPullRequest do
 
       github_reponse = [
         OpenStruct.new(title: "Example",
+                       id: 12_345,
                        _links: OpenStruct.new(html: OpenStruct.new(href: github_href)),
                        user: OpenStruct.new(login: "some_owner"),
                        rels: octokit_rels,
@@ -44,6 +46,7 @@ describe GithubPullRequest do
 
       expected_collection = [
         GithubPullRequest.new(link: github_href,
+                              original_id: 12_345,
                               title: "Example",
                               org: "Alliants",
                               repo: "Project Maverick",
@@ -72,6 +75,7 @@ describe GithubPullRequest do
       some_date = Time.zone.today
       github_pull_request = GithubPullRequest
                             .new(link: github_href,
+                                 original_id: 12_345,
                                  title: "Example",
                                  org: "Alliants",
                                  repo: "Project Maverick",
@@ -80,6 +84,7 @@ describe GithubPullRequest do
                                  number_of_comments: 1)
 
       expect(github_pull_request.to_h).to eq(link: github_href,
+                                             original_id: 12_345,
                                              title: "Example",
                                              org: "Alliants",
                                              repo: "Project Maverick",
