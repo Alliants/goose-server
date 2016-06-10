@@ -22,7 +22,11 @@ module Maverick
 
     desc "Updates coming from github webhooks"
     post :"github-webhook" do
-      Github::Webhook.call(payload: params.to_h.symbolize_keys, type: headers["X-Github-Event"])
+      handler = Github::Webhook.new(
+        payload: params.to_h.symbolize_keys,
+        type: headers["X-Github-Event"]
+      )
+      EventHandler.process(handler: handler) if handler.save
     end
   end
 end

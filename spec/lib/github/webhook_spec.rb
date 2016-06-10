@@ -29,7 +29,7 @@ describe Github::Webhook do
         allow(Github::Webhook::PullRequestHandler).to receive(:new)
           .with(github_pr_data).and_return(double("instance", save: true))
 
-        described_class.call(payload: github_pr_data, type: "pull_request")
+        described_class.new(payload: github_pr_data, type: "pull_request")
 
         expect(Github::Webhook::PullRequestHandler).to have_received(:new).with(github_pr_data)
       end

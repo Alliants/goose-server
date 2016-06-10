@@ -25,6 +25,10 @@ module Github
         pr
       end
 
+      def event_type
+        "pull_request_review_comment"
+      end
+
       private
 
       attr_reader :payload

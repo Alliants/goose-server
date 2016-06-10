@@ -35,6 +35,10 @@ module Github
         @payload = payload
       end
 
+      def event_type
+        "pull_request"
+      end
+
       def link
         payload[:pull_request][:html_url]
       end
