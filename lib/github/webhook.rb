@@ -8,7 +8,7 @@ module Github
       "pull_request_review_comment" => PullRequestReviewCommentHandler
     }.freeze
 
-    def initialize(payload:, type:)
+    def self.create_handler(payload:, type:)
       handler = TYPE_MAP.fetch(type)
 
       handler.new(payload)

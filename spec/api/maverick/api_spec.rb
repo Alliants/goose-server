@@ -56,7 +56,7 @@ describe Maverick::API do
           foo: "bar"
         }
 
-        allow(Github::Webhook).to receive(:new)
+        allow(Github::Webhook).to receive(:create_handler)
           .with(payload: event_information, type: "pull_request").and_return(webhook_handler)
         expect(webhook_handler).to receive(:save)
 
@@ -69,7 +69,7 @@ describe Maverick::API do
           foo: "bar"
         }
 
-        allow(Github::Webhook).to receive(:new)
+        allow(Github::Webhook).to receive(:create_handler)
           .with(payload: event_information, type: "pull_request").and_return(webhook_handler)
         allow(webhook_handler).to receive(:save).and_return(true)
         expect(EventHandler).to receive(:process).with(handler: webhook_handler)
