@@ -13,6 +13,12 @@ module Github
         payload[:action]
       end
 
+      def as_json(options=nil)
+        {
+          action: action
+        }
+      end
+
       def save
         pr_repository = PullRequestRepository.new
         pr = pr_repository.find_pull_request(original_id: original_id)

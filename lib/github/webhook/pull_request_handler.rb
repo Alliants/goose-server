@@ -75,6 +75,20 @@ module Github
         payload[:action]
       end
 
+      def as_json(options=nil)
+        {
+          link: link,
+          title: title,
+          organization: organization,
+          repository: repository,
+          owner: owner,
+          original_id: original_id,
+          created_at: created_at,
+          number_of_comments: number_of_comments,
+          action: action
+        }
+      end
+
       def save
         TRANSITION_MAP.fetch(action, NonExistingAction).execute(self)
       end
