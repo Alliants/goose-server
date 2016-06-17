@@ -45,9 +45,9 @@ describe Github::Webhook::PullRequestReviewCommentHandler do
 
   describe "as_json" do
     specify do
-        github_pr_data = {
-          action: "created",
-        }
+      github_pr_data = {
+        action: "created"
+      }
 
       expected_json = {
         action: github_pr_data.fetch(:action)

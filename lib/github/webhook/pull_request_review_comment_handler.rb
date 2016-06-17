@@ -13,7 +13,7 @@ module Github
         payload[:action]
       end
 
-      def as_json(options=nil)
+      def as_json(_options = nil)
         {
           action: action
         }
