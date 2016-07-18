@@ -16,5 +16,8 @@
 # Local Environment variables for development
 .env
 
+# Local development configuration
+config/sprawl.development.yml
+
 # Ignore code coverage
 /coverage

@@ -26,7 +26,11 @@ module Maverick
         payload: params.to_h.symbolize_keys,
         type: headers["X-Github-Event"]
       )
-      EventHandler.process(handler: handler) if handler.save
+
+      EventHandler.process(
+        handler: handler,
+        broadcast_event: ENV["BROADCAST_EVENTS"] == "true"
+      ) if handler.save
     end
   end
 end

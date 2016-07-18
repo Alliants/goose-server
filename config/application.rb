@@ -25,6 +25,7 @@ module ProjectMaverick
 
     # Add the lib folders
     config.autoload_paths << "#{config.root}/lib/github"
+    config.autoload_paths << "#{config.root}/lib/sprawl_integration"
 
     # Add the github directory
     config.paths.add File.join('app', 'github'), glob: File.join('**', '*.rb')
