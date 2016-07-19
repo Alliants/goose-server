@@ -13,9 +13,24 @@ module Github
         payload[:action]
       end
 
+      def actor
+        payload[:comment][:user][:login]
+      end
+
+      def comment_link
+        payload[:comment][:html_url]
+      end
+
+      def pull_request_link
+        payload[:pull_request][:html_url]
+      end
+
       def as_json(_options = nil)
         {
-          action: action
+          action: action,
+          actor: actor,
+          comment_link: comment_link,
+          pull_request_link: pull_request_link
         }
       end
 

@@ -46,11 +46,24 @@ describe Github::Webhook::PullRequestReviewCommentHandler do
   describe "as_json" do
     specify do
       github_pr_data = {
-        action: "created"
+        action: "created",
+        comment: {
+          user: {
+            login: "someuser"
+          },
+          html_url: "http://example.com"
+        },
+        pull_request: {
+          id: 12_345,
+          html_url: "http://another.example.com"
+        }
       }
 
       expected_json = {
-        action: github_pr_data.fetch(:action)
+        action: "created",
+        actor: "someuser",
+        comment_link: "http://example.com",
+        pull_request_link: "http://another.example.com"
       }
 
       expect(described_class.new(github_pr_data).as_json).to eq(expected_json)
