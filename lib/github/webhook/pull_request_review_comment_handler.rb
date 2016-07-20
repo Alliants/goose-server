@@ -25,15 +25,6 @@ module Github
         payload[:pull_request][:html_url]
       end
 
-      def as_json(_options = nil)
-        {
-          action: action,
-          actor: actor,
-          comment_link: comment_link,
-          pull_request_link: pull_request_link
-        }
-      end
-
       def save
         pr_repository = PullRequestRepository.new
         pr = pr_repository.find_pull_request(original_id: original_id)
