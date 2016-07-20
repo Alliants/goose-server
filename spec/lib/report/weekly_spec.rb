@@ -39,7 +39,7 @@ describe Report::Weekly do
   end
 
   def create_pr_event(owner:, created_at: Time.zone.now, action:, repository:)
-    handler = {
+    payload = {
       repository: repository,
       owner: owner,
       created_at: created_at
@@ -48,7 +48,7 @@ describe Report::Weekly do
     EventRepository.new.create(
       event_type: "pull_request",
       action: action,
-      payload: handler.to_json
+      payload: payload.to_json
     )
   end
 end
