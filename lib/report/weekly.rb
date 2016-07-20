@@ -15,7 +15,7 @@ module Report
                                                 event_type: "pull_request").count
     end
 
-    def as_json
+    def as_json(_options = nil)
       {
         start_date: date_range.first.to_date,
         end_date: date_range.last.to_date,
