@@ -35,7 +35,7 @@ describe Github::Webhook::PullRequestHandler do
   end
 
   describe "the action is close" do
-    it "creates a new pull request" do
+    it "deletes an existing pull request" do
       create(:pull_request_storage, original_id: 12_345)
 
       github_pr_data = {
@@ -45,6 +45,39 @@ describe Github::Webhook::PullRequestHandler do
           title: "[WIP] Add github-webhooks endpoint",
           created_at: "2016-05-27T15:08:42Z",
           review_comments: 0,
+          id: 12_345,
+          user: {
+            login: "guiman"
+          },
+          head: {
+            user: {
+              login: "Alliants"
+            },
+            repo: {
+              full_name: "Alliants/goose-server"
+            }
+          }
+        }
+      }
+
+      expect do
+        described_class.new(github_pr_data).save
+      end.to change { PullRequestRepository.new.count }.by(-1)
+    end
+  end
+
+  describe "the action is merged" do
+    it "deletes an existing pull request" do
+      create(:pull_request_storage, original_id: 12_345)
+
+      github_pr_data = {
+        action: "closed",
+        pull_request: {
+          html_url: "https://github.com/Alliants/goose-server/pull/9",
+          title: "[WIP] Add github-webhooks endpoint",
+          created_at: "2016-05-27T15:08:42Z",
+          review_comments: 0,
+          merged: true,
           id: 12_345,
           user: {
             login: "guiman"

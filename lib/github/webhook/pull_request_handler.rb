@@ -28,7 +28,8 @@ module Github
 
       TRANSITION_MAP = {
         "opened" => OpenAction,
-        "closed" => CloseAction
+        "closed" => CloseAction,
+        "merged" => CloseAction
       }.freeze
 
       def initialize(payload)
@@ -71,8 +72,16 @@ module Github
         payload[:pull_request][:review_comments]
       end
 
+      def merged
+        payload[:pull_request][:merged].to_s == "true"
+      end
+
       def action
-        payload[:action]
+        if payload[:action] == "closed" && merged
+          "merged"
+        else
+          payload[:action]
+        end
       end
 
       def as_json(_options = nil)
