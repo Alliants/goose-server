@@ -28,7 +28,9 @@ module Maverick
       )
 
       EventHandler.process(
-        handler: handler,
+        type: handler.event_type,
+        action: handler.action,
+        payload: handler,
         broadcast_event: ENV["BROADCAST_EVENTS"] == "true"
       ) if handler.save
     end

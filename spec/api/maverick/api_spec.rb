@@ -51,7 +51,7 @@ describe Maverick::API do
   describe "Github Webhook updates" do
     describe "post" do
       it "recieves an update from github" do
-        webhook_handler = double("Webhook Handler")
+        webhook_handler = double("Webhook Handler", event_type: "foo", action: "bar")
         event_information = {
           foo: "bar"
         }
@@ -64,7 +64,7 @@ describe Maverick::API do
       end
 
       it "triggers an event" do
-        webhook_handler = double("Webhook Handler")
+        webhook_handler = double("Webhook Handler", event_type: "foo", action: "bar")
         event_information = {
           foo: "bar"
         }
@@ -74,7 +74,7 @@ describe Maverick::API do
           .and_return(webhook_handler)
         allow(webhook_handler).to receive(:save).and_return(true)
         expect(EventHandler).to receive(:process)
-          .with(handler: webhook_handler, broadcast_event: false)
+          .with(type: "foo", action: "bar", payload: webhook_handler, broadcast_event: false)
 
         post "/api/github-webhook", event_information, "X-Github-Event" => "pull_request"
       end

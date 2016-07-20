@@ -28,7 +28,11 @@ describe EventHandler do
         handler = Github::Webhook::PullRequestHandler.new(github_pr_data)
 
         expect do
-          described_class.process(handler: handler)
+          described_class.process(
+            type: handler.event_type,
+            action: handler.action,
+            payload: handler
+          )
         end.to change { EventRepository.new.count }.by(1)
       end
     end
@@ -49,7 +53,11 @@ describe EventHandler do
         handler = Github::Webhook::PullRequestReviewCommentHandler.new(github_pr_data)
 
         expect do
-          described_class.process(handler: handler)
+          described_class.process(
+            type: handler.event_type,
+            action: handler.action,
+            payload: handler
+          )
         end.to change { EventRepository.new.count }.by(1)
       end
     end
@@ -81,7 +89,12 @@ describe EventHandler do
 
         expect(SprawlIntegration::Broadcaster).to receive(:fire)
 
-        described_class.process(handler: handler, broadcast_event: true)
+        described_class.process(
+          type: handler.event_type,
+          action: handler.action,
+          payload: handler,
+          broadcast_event: true
+        )
       end
     end
   end

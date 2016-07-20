@@ -1,11 +1,11 @@
 require "sprawl_integration/broadcaster"
 
 class EventHandler
-  def self.process(handler:, broadcast_event: false)
+  def self.process(type:, action:, payload:, broadcast_event: false)
     event = EventRepository.new.create(
-      event_type: handler.event_type,
-      action: handler.action,
-      payload: handler.to_json
+      event_type: type,
+      action: action,
+      payload: payload.to_json
     )
 
     SprawlIntegration::Broadcaster.fire(event: event) if broadcast_event
